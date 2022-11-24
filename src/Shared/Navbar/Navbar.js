@@ -2,10 +2,18 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import home from '../../assets/images/home.png'
 import { AuthContext } from '../../Contexts/AuthProvider';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
+    const handleLogOut = () => {
+        logOut()
+            .then(res => {
+                toast.warning('Logged Out')
+            })
+            .catch(error => console.log(error))
+    }
 
     const menuItems =
         <>
@@ -13,7 +21,9 @@ const Navbar = () => {
                 user?.uid ?
                     <>
                         <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/about'>About</Link></li></>
+                        <li><Link to='/about'>About</Link></li>
+                        <li><Link to='/login'>Log out</Link></li>
+                    </>
                     :
                     <>
                         <li><Link to='/signup'>Sign up</Link></li>
