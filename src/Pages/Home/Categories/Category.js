@@ -7,13 +7,13 @@ const Category = ({ category }) => {
         <div className="card bg-base-100 shadow-xl">
             <figure className="px-10 pt-10">
                 <Link to='/about'>
-                    <img className='w-20' src={img} alt="/" />
+                    <img className='w-28' src={img} alt="/" />
                 </Link>
             </figure>
             <div className="card-body items-center text-center">
                 <h2 className="card-title">{name}</h2>
             </div>
-        </div>
+        </div >
     );
 };
 
