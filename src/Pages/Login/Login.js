@@ -5,26 +5,28 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import login from '../../assets/images/login.svg';
 
 const Login = () => {
-    // const { signIn } = useContext(AuthContext);
+    const { signIn } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
-    // const handleLogin = data => {
-    //     setLoginError('');
-    //     signIn(data.email, data.password)
-    //         .then(res => {
-    //             const user = res.user;
-    //             console.log(user);
-    //             setLoginUserEmail(data.email)
-    //         })
-    //         .catch(err => {
-    //             console.error(err.message);
-    //             setLoginError(err.message)
-    //         })
-    // }
+    const handleLogin = data => {
+        setLoginError('');
+        signIn(data.email, data.password)
+            .then(res => {
+                const user = res.user;
+                console.log(user);
+                setLoginUserEmail(data.email);
+                navigate(from, { replace: true });
+            })
+            .catch(err => {
+                console.error(err.message);
+                setLoginError(err.message)
+            })
+    }
 
     return (
         <div className='flex justify-center items-center'>
@@ -34,7 +36,7 @@ const Login = () => {
             <div className='mt-5 flex justify-center items-center'>
                 <div className='w-96 p-7'>
                     <h2 className='text-center text-xl'>Login</h2>
-                    <form onSubmit={handleSubmit()}>
+                    <form onSubmit={handleSubmit(handleLogin)}>
                         <div className="form-control w-full max-w-xs">
                             <label className="label"><span className="label-text">Email</span></label>
                             <input type="text"

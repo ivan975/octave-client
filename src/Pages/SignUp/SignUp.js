@@ -1,39 +1,59 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthProvider';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import login from '../../assets/images/login.svg';
 
 const SignUp = () => {
 
-    // const { createUser, updateUser } = <useConte></useConte>xt(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
     const [createdUserEmail, setCreatedUserEmail] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
-    // const handleSignUp = data => {
-    //     createUser(data.email, data.password)
-    //         .then(res => {
-    //             setSignupError('')
-    //             const user = res.user;
-    //             console.log(user);
-    //             toast('user created successfully')
-    //             const userInfo = {
-    //                 displayName: data.name
-    //             }
-    //             updateUser(userInfo)
-    //                 .then(res => {
-    //                     saveUsers(data.name, data.email);
-    //                 })
-    //                 .catch(err => console.error(err))
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //             setSignupError(err.message)
+    const handleSignUp = data => {
+        createUser(data.email, data.password)
+            .then(res => {
+                setSignupError('')
+                const user = res.user;
+                console.log(user);
+                toast('user created successfully')
+                navigate(from, { replace: true })
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(res => {
+                        // saveUsers(data.name, data.email);
+
+                    })
+                    .catch(err => console.error(err))
+            })
+            .catch(err => {
+                console.error(err);
+                setSignupError(err.message)
+            })
+    }
+
+    // const saveUsers = (name, email) => {
+    //     const user = { name, email };
+    //     fetch('https://doctors-portal-server-sandy-three.vercel.app/users', {
+    //         method: 'POST',
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify(user)
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setCreatedUserEmail(email)
     //         })
     // }
+
 
     return (
         <div className='flex justify-center items-center'>
@@ -43,7 +63,7 @@ const SignUp = () => {
             <div className='mt-5 flex justify-center items-center'>
                 <div className='w-96 p-7'>
                     <h2 className='text-center text-xl'>Sign Up</h2>
-                    <form onSubmit={handleSubmit()}>
+                    <form onSubmit={handleSubmit(handleSignUp)}>
                         <div className="form-control w-full max-w-xs">
                             <label className="label"><span className="label-text">Name</span></label>
                             <input type="text"{...register('name', {
