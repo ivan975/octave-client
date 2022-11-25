@@ -103,7 +103,12 @@ const SignUp = () => {
                                 className="input input-bordered w-full max-w-xs" />
                             {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                             <label className="label"><span className="label-text">Forgot Password?</span></label>
-                        </div>
+                            <div className="dropdown">
+                                <label tabIndex={0} className="btn btn-primary rounded-sm mb-2 py-1">Option</label>
+                                <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li>Seller</li>
+                                </ul>
+                            </div>                      </div>
                         <input className='btn btn-accent w-full max-w-xs' value='sign up' type="submit" />
                         {
                             signupError && <p className='text-red-600'>{signupError}</p>
@@ -118,7 +123,7 @@ const SignUp = () => {
                     </button>
                 </div>
             </div >
-        </div>
+        </div >
     );
 };
 
