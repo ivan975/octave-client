@@ -32,6 +32,7 @@ const CategoryID = ({ product }) => {
                         Original Price: <span className='text-accent font-semibold'> {original_price}</span>
                     </button>
                 </div>
+                <button className='btn btn-accent'>Book</button>
             </div>
         </div>
     );
