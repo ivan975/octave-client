@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryID = ({ product }) => {
+const CategoryID = ({ product, setOpen }) => {
 
     const { img, name, location, resale_price, time_of_post, original_price, seller_name } = product;
 
@@ -32,7 +32,11 @@ const CategoryID = ({ product }) => {
                         Original Price: <span className='text-accent font-semibold'> {original_price}</span>
                     </button>
                 </div>
-                <button className='btn btn-accent'>Book</button>
+                <label
+                    htmlFor="booking-modal"
+                    className="btn btn-accent"
+                    onClick={() => setOpen(product)}
+                >Book</label>
             </div>
         </div>
     );

@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import BookingModal from '../Booking/BookingModal/BookingModal';
 import Category from './CategoryID';
 const CategoriesID = () => {
+
+    const [open, setOpen] = useState(null);
 
     const { data: products = [] } = useQuery({
         queryKey: ['products'],
@@ -13,15 +16,26 @@ const CategoriesID = () => {
         }
     })
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <section>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                {
+                    products.map(product => <Category
+                        key={product._id}
+                        product={product}
+                        setOpen={setOpen}
+                    >
+                    </Category>)
+                }
+            </div>
             {
-                products.map(product => <Category
-                    key={product._id}
-                    product={product}
-                >
-                </Category>)
+                open &&
+                <BookingModal
+                    open={open}
+                    setOpen={setOpen}
+                ></BookingModal>
             }
-        </div>
+        </section >
+
     );
 };
 
