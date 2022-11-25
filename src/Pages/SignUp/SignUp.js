@@ -29,7 +29,7 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(res => {
-                        // saveUsers(data.name, data.email);
+                        saveUsers(data.name, data.email);
 
                     })
                     .catch(err => console.error(err))
@@ -54,20 +54,20 @@ const SignUp = () => {
             })
     }
 
-    // const saveUsers = (name, email) => {
-    //     const user = { name, email };
-    //     fetch('https://doctors-portal-server-sandy-three.vercel.app/users', {
-    //         method: 'POST',
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         },
-    //         body: JSON.stringify(user)
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setCreatedUserEmail(email)
-    //         })
-    // }
+    const saveUsers = (name, email) => {
+        const user = { name, email };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCreatedUserEmail(email)
+            })
+    }
 
 
     return (
