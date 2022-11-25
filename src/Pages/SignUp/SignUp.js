@@ -4,17 +4,24 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import login from '../../assets/images/login.svg';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
 
     const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
-    const [createdUserEmail, setCreatedUserEmail] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+
+
+    if (token) {
+        navigate('/');
+    }
 
     const handleSignUp = data => {
         createUser(data.email, data.password)
