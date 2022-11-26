@@ -35,6 +35,27 @@ const MyProducts = () => {
         }
     }
 
+    const handleUpdate = id => {
+        fetch(`http://localhost:5000/products/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'Sold' })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    const remaining = products.filter(product => product._id !== id);
+                    const approving = products.find(product => product._id === id);
+                    approving.status = 'Sold'
+                    const newProducts = [approving, ...remaining];
+                    setProducts(newProducts);
+                }
+            })
+    }
+
     if (isLoading) {
         return <Loading />
     }
@@ -75,7 +96,12 @@ const MyProducts = () => {
                                 <td>{item.category}</td>
                                 <td>{item.original_price}</td>
                                 <td>{item.resale_price}</td>
-                                <td><button onClick={() => { handleDelete(item._id) }} className='btn btn-xs btn-accent'>Delete</button></td>
+                                <td>
+                                    <button onClick={() => { handleDelete(item._id) }} className='btn btn-xs btn-accent mr-2'>Delete</button>
+                                    <button onClick={() => { handleUpdate(item._id) }} className='btn btn-xs btn-accent mr-2'>{item.status ? item.status : 'Available'}</button>
+                                    <button onClick={() => { handleDelete(item._id) }} className='btn btn-xs btn-accent'>Advertise</button>
+                                </td>
+
                             </tr>)
                     }
                 </tbody>
