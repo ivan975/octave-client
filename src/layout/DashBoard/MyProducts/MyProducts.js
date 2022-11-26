@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../../Shared/Loading/Loading';
+import { toast } from 'react-toastify';
 
 const MyProducts = () => {
+
+    const [products, setProducts] = useState([]);
+
 
     const { data: items = [], isLoading } = useQuery({
         queryKey: ['items'],
@@ -14,6 +18,22 @@ const MyProducts = () => {
         }
     })
 
+    const handleDelete = id => {
+        const proceed = window.confirm('Are you sure, you want to cancel the order?');
+        if (proceed) {
+            fetch(`http://localhost:5000/products/${id}`, {
+                method: "DELETE"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        toast.error(`Product deleted`)
+                        const remaining = products.filter(product => product._id !== id)
+                        setProducts(remaining);
+                    }
+                })
+        }
+    }
 
     if (isLoading) {
         return <Loading />
@@ -31,6 +51,7 @@ const MyProducts = () => {
                         <th>Category</th>
                         <th>Original Price</th>
                         <th>Resale Price</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,18 +71,11 @@ const MyProducts = () => {
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    {item.location}
-                                </td>
-                                <td>
-                                    {item.category}
-                                </td>
+                                <td>{item.location}</td>
+                                <td>{item.category}</td>
                                 <td>{item.original_price}</td>
                                 <td>{item.resale_price}</td>
-                                <td>{item.time_of_post}</td>
-                                <th>
-                                    <button className="btn btn-ghost btn-xs">{item.seller_name}</button>
-                                </th>
+                                <td><button onClick={() => { handleDelete(item._id) }} className='btn btn-xs btn-accent'>Delete</button></td>
                             </tr>)
                     }
                 </tbody>
