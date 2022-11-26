@@ -14,7 +14,7 @@ const DashBoard = () => {
 
     return (
         <div>
-            <Navbar />
+            < Navbar />
             <div className="drawer drawer-mobile">
                 <input id="dashboard-layout" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
@@ -41,11 +41,9 @@ const DashBoard = () => {
                             </>
                         }
                     </ul>
-
                 </div>
             </div>
-
-        </div>
+        </div >
     );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import Loading from '../../../Shared/Loading/Loading';
 
 const MyProducts = () => {
 
-    const { data: items = [] } = useQuery({
+    const { data: items = [], isLoading } = useQuery({
         queryKey: ['items'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/products');
@@ -13,12 +14,18 @@ const MyProducts = () => {
         }
     })
 
+
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
         <div className="overflow-x-auto w-full">
             <table className="table w-full">
 
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Name</th>
                         <th>Location</th>
                         <th>Category</th>
@@ -37,7 +44,7 @@ const MyProducts = () => {
                                     <div className="flex items-center space-x-3">
                                         <div className="avatar">
                                             <div className="mask mask-squircle w-12 h-12">
-                                                <img src={item.img} alt="Avatar Tailwind CSS Component" />
+                                                <img src={item.image} alt="/" />
                                             </div>
                                         </div>
                                         <div>
