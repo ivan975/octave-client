@@ -32,11 +32,13 @@ const SignUp = () => {
                 toast('user created successfully')
                 navigate(from, { replace: true })
                 const userInfo = {
-                    displayName: data.name
+                    displayName: data.name,
+                    email: user.email,
+                    role: user.role
                 }
                 updateUser(userInfo)
                     .then(res => {
-                        saveUsers(data.name, data.email);
+                        saveUsers(data.name, data.email, data.role);
 
                     })
                     .catch(err => console.error(err))
@@ -61,8 +63,8 @@ const SignUp = () => {
             })
     }
 
-    const saveUsers = (name, email) => {
-        const user = { name, email };
+    const saveUsers = (name, email, role) => {
+        const user = { name, email, role };
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
@@ -109,13 +111,16 @@ const SignUp = () => {
                             })}
                                 className="input input-bordered w-full max-w-xs" />
                             {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
-                            <label className="label"><span className="label-text">Forgot Password?</span></label>
-                            <div className="dropdown">
-                                <label tabIndex={0} className="btn btn-primary rounded-sm mb-2 py-1">Option</label>
-                                <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li>Seller</li>
-                                </ul>
-                            </div>                      </div>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label"><span className="label-text">Role</span></label>
+                                <select {...register('role')} className="select select-bordered w-full max-w-xs">
+                                    <option disabled>Role</option>
+                                    <option>Seller</option>
+                                    <option>Buyer</option>
+                                </select>
+                                <label className="label"><span className="label-text"></span></label>
+                            </div>
+                        </div>
                         <input className='btn btn-accent w-full max-w-xs' value='sign up' type="submit" />
                         {
                             signupError && <p className='text-red-600'>{signupError}</p>

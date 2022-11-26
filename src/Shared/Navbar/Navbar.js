@@ -25,6 +25,7 @@ const Navbar = () => {
                     <>
                         <li><Link to='/dashboard'>Dashboard</Link></li>
                         <li><Link onClick={handleLogOut} to='/login'>Log out</Link></li>
+                        <li className='font-bold text-accent'><Link>{user.displayName}</Link></li>
                     </>
                     :
                     <>

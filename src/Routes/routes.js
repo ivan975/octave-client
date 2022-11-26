@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import AddItem from "../layout/DashBoard/AddItem/AddItem";
 import AllUsers from "../layout/DashBoard/AllUsers/AllUsers";
 import DashBoard from "../layout/DashBoard/DashBoard";
 import MyOrders from "../layout/DashBoard/MyOrders/MyOrders";
@@ -11,7 +12,9 @@ import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import AdminRoute from "./AdminRoute";
+import BuyerRoute from "./BuyerRoute";
 import PrivateRoute from "./PrivateRoute";
+import SellerRoute from "./SellerRoute";
 
 export const router = createBrowserRouter([
     {
@@ -51,8 +54,12 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                path: '/dashboard',
-                element: <MyOrders />
+                path: '/dashboard/myOrders',
+                element: <BuyerRoute><MyOrders /></BuyerRoute>
+            },
+            {
+                path: '/dashboard/addProduct',
+                element: <SellerRoute><AddItem /></SellerRoute>
             },
             {
                 path: '/dashboard/allUsers',
