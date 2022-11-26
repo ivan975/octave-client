@@ -31,8 +31,6 @@ const MyProducts = () => {
                         <th>Category</th>
                         <th>Original Price</th>
                         <th>Resale Price</th>
-                        <th>Time of post</th>
-                        <th>Seller Name</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +58,7 @@ const MyProducts = () => {
                                 </td>
                                 <td>{item.original_price}</td>
                                 <td>{item.resale_price}</td>
+                                <td>{item.time_of_post}</td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs">{item.seller_name}</button>
                                 </th>

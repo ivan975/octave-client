@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-const AllUsers = () => {
+const AllSellers = () => {
 
-    const { data: users = [] } = useQuery({
-        queryKey: ['users'],
+    const { data: sellers = [] } = useQuery({
+        queryKey: ['Seller'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/buyers')
+            const res = await fetch('http://localhost:5000/sellers')
             const data = res.json()
             return data;
         }
@@ -28,12 +28,12 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((user, i) =>
-                                <tr key={user._id}>
+                            sellers.map((seller, i) =>
+                                <tr key={seller._id}>
                                     <th>{i + 1}</th>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.role}</td>
+                                    <td>{seller.name}</td>
+                                    <td>{seller.email}</td>
+                                    <td>{seller.role}</td>
                                     <td><button className='btn btn-xs btn-accent rounded-lg'>Delete</button></td>
                                 </tr>
                             )
@@ -45,4 +45,4 @@ const AllUsers = () => {
     );
 };
 
-export default AllUsers;
+export default AllSellers;

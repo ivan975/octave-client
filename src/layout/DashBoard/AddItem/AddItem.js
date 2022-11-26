@@ -52,8 +52,11 @@ const AddItem = () => {
     return (
         <div>
             <h2 className='text-4xl'>Add a product</h2>
-            <form className='grid grid-cols-1 lg:grid-cols-2' onSubmit={handleSubmit(handleAddProduct)}>
-                <div className="form-control w-full max-w-xs">
+            <form
+                className='grid grid-cols-1 lg:grid-cols-2'
+                onSubmit={handleSubmit(handleAddProduct)}>
+                <div
+                    className="form-control w-full max-w-xs">
                     <label className="label"><span className="label-text">Name</span></label>
                     <input type="text"{...register('name', {
                         required: 'Name is required'
@@ -90,7 +93,7 @@ const AddItem = () => {
                         required: 'Time is required'
                     })}
                         className="input input-bordered w-full max-w-xs" />
-                    {errors.time && <p className='text-red-600'>{errors.time?.message}</p>}
+                    {errors.time_of_post && <p className='text-red-600'>{errors.time?.message}</p>}
                 </div>
                 <div className="form-control w-full max-w-xs">
                     <label className="label"><span className="label-text">Specialty</span></label>
