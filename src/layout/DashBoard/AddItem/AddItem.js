@@ -32,7 +32,7 @@ const AddItem = () => {
                         category: data.category,
                         image: imgData.data.display_url
                     }
-                    fetch('http://localhost:5000/products', {
+                    fetch('https://assignment-12-server-six.vercel.app/products', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

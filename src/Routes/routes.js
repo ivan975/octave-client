@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/categories/:name',
-                loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.name}`),
+                loader: ({ params }) => fetch(`https://assignment-12-server-six.vercel.app/categories/${params.name}`),
                 element: <PrivateRoute><CategoriesID /></PrivateRoute>,
             },
 

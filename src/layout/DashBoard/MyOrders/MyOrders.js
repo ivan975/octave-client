@@ -6,7 +6,7 @@ const MyOrders = () => {
 
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/buyingProducts?email=${user?.email}`;
+    const url = `https://assignment-12-server-six.vercel.app/buyingProducts?email=${user?.email}`;
 
     const { data: buyingProducts = [] } = useQuery({
         queryKey: ['buyingProducts', user?.email],
