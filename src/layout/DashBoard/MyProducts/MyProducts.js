@@ -8,7 +8,7 @@ const MyProducts = () => {
     const [products, setProducts] = useState([]);
 
 
-    const { data: items = [], isLoading } = useQuery({
+    const { data: items = [], isLoading, refetch } = useQuery({
         queryKey: ['items'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/products');
@@ -30,6 +30,7 @@ const MyProducts = () => {
                         toast.error(`Product deleted`)
                         const remaining = products.filter(product => product._id !== id)
                         setProducts(remaining);
+                        refetch();
                     }
                 })
         }
@@ -52,6 +53,7 @@ const MyProducts = () => {
                     approving.status = 'Sold'
                     const newProducts = [approving, ...remaining];
                     setProducts(newProducts);
+                    refetch();
                 }
             })
     }

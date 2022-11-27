@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const AllUsers = () => {
 
-    const { data: users = [] } = useQuery({
+    const [buyer, setBuyer] = useState([]);
+
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/buyers')
@@ -11,6 +14,24 @@ const AllUsers = () => {
             return data;
         }
     })
+
+    const handleDelete = id => {
+        const proceed = window.confirm(`Are you sure you want to delete the buyer?`);
+        if (proceed) {
+            fetch(`http://localhost:5000/buyers/${id}`, {
+                method: "DELETE"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        toast.error(`Buyer deleted`)
+                        const remaining = buyer.filter(b => b._id !== id)
+                        setBuyer(remaining);
+                        refetch();
+                    }
+                })
+        }
+    }
 
     return (
         <div>
@@ -34,7 +55,9 @@ const AllUsers = () => {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
-                                    <td><button className='btn btn-xs btn-accent rounded-lg'>Delete</button></td>
+                                    <td>
+                                        <button onClick={() => { handleDelete(user._id) }} className='btn btn-xs btn-accent rounded-lg'>Delete</button>
+                                    </td>
                                 </tr>
                             )
                         }

@@ -45,9 +45,11 @@ export const router = createBrowserRouter([
                 element: <Blogs />,
             },
             {
-                path: '/categories',
+                path: '/categories/:name',
+                loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.name}`),
                 element: <PrivateRoute><CategoriesID /></PrivateRoute>,
             },
+
         ],
     },
     {
