@@ -112,7 +112,7 @@ const AddItem = () => {
                         className="input input-bordered w-full max-w-xs" />
                     {errors.email && <p className='text-red-600'>{errors.img?.message}</p>}
                 </div>
-                <input className='btn btn-accent w-full max-w-xs' value='Add Doctor' type="submit" />
+                <input className='btn btn-accent w-full max-w-xs' value='Add Product' type="submit" />
             </form >
         </div >
     );
